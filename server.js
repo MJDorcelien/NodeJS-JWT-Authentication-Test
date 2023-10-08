@@ -62,23 +62,23 @@ app.post('/api/login', (req, res) => {
 app.get('/api/dashboard', jwtMW, (req, res) => {
     res.json({
         success: true,
-        myContent: 'Secret content that only logged in people can see!!!!',
+        myContent: 'Secret content that only logged in people can see!!!!'
     });
 });
 
 app.get('/api/settings', jwtMW, (req, res) => {
     res.json({
         success: true,
-        myContent: 'Secret content that only logged in people can see',
+        myContent: 'Secret content that only logged in people can see'
     });
 });
 
-// app.get('/api/prices', jwtMW, (req, res) => {
-//     res.json({
-//         success: true,
-//         myContent: 'This is the price $3.99'
-//     });
-// });
+app.get('/api/prices', jwtMW, (req, res) => {
+    res.json({
+        success: true,
+        myContent: 'This is the price $3.99'
+    });
+});
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

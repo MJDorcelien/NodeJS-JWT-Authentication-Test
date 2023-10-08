@@ -34,6 +34,9 @@
     </div>
 
     <script>
+        var url = "/api";
+        var data = e.target.getAttribute('data-name')
+
         function login(){
             const data = {
                 username: document.getElementById('username').value,
@@ -42,6 +45,7 @@
             axios.post('/api/login', data)
                 .then(res => {
                     console.log(res);
+                    history.pushState(data, null,)
                     document.getElementById('username').value = '';
                     document.getElementById('password').value = '';
                     if(res && res.data && res.data.success){
@@ -54,12 +58,14 @@
 
         function getDashboard(){
             const token = localStorage.getItem('jwt');
+            url = "/api/dashboard";
             axios.get('/api/dashboard', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             }).then(res => {
                 if(res && res.data && res.data.success){
+                    history.pushState(data, null, url);
                     document.querySelector('h1.row').innerHTML = 'Dashboard';
                     document.querySelector('main').innerHTML = res.data.myContent;
                 }
@@ -68,30 +74,19 @@
 
         function getSettings(){
             const token = localStorage.getItem('jwt');
+            url = "/api/settings";
             axios.get('/api/settings', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             }).then(res => {
                 if(res && res.data && res.data.success){
+                    history.pushState(data, null, url);
                     document.querySelector('h1.row').innerHTML = 'Settings';
                     document.querySelector('main').innerHTML = res.data.content;
                 }
             });
         }
-
-        var container = document.querySelector('.buttons');
-
-        container.addEventListener('click', function(e) {
-            if (e.target != e.currentTarget) {
-                e.preventDefault();
-            }
-            e.stopPropagation();
-        }, false);
-
-        var data = e.target.getAttribute('data-name'),
-        url = data + ".html";
-        history.pushState(data, null, url);
     </script>
 </body>
 </html>
